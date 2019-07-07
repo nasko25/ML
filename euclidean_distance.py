@@ -42,7 +42,7 @@ dataset = {
 		
 new_features = [5, 7]
 
-def visualize_points():
+def visualize_points(result):
 	'''for i in dataset:
 		for ii in dataset[i]:
 			plt.scatter(ii[0], ii[1], s=100, color = i)
@@ -50,7 +50,7 @@ def visualize_points():
 	'''
 	[[plt.scatter(ii[0], ii[1], s=100, color = i) for ii in dataset[i]] for i in dataset]
 
-	plt.scatter(new_features[0], new_features[1])
+	plt.scatter(new_features[0], new_features[1], color = result)
 
 	plt.show()
 	
@@ -60,7 +60,21 @@ def k_nearest_neighbors(data, predict, k = 3):
 	if len(data) >= k:
 		warnings.warn("K is set to a value less than total voting groups!")
 	
-	# knnalgos
+	distances = []
+	for group in data:
+		for features in data[group]:
+			# eucledean_distance = np.sqrt(np.sum((np.array(features)-np.array(predict))**2))
+			eucledean_distance = np.linalg.norm(np.array(features)-np.array(predict)) # same as ^
+			distances.append([eucledean_distance, group])
+			
+	votes = [i[1] for i in sorted(distances)[:k]]
+	print(votes)
+	print( Counter(votes).most_common(1) )
+	vote_result = Counter(votes).most_common(1)[0][0]
+	
 	return vote_result
 
 print(len(dataset))
+result = k_nearest_neighbors(dataset, new_features, k = 3)
+print(result)
+visualize_points(result)
