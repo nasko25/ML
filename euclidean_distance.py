@@ -4,6 +4,8 @@ import warnings
 from matplotlib import style
 from collections import Counter
 from math import sqrt
+import pandas as pd
+import random
 
 style.use("fivethirtyeight")
 
@@ -78,3 +80,19 @@ print(len(dataset))
 result = k_nearest_neighbors(dataset, new_features, k = 3)
 print(result)
 visualize_points(result)
+
+
+# load data from a file
+df = pd.read_csv("datasets/dataset.data")
+df.replace("?", -99999, inplace=True)
+df.drop(['id'], 1, inplace=True)
+print(df.head())
+full_data = df.astype(float).values.tolist()
+print(full_data[:10])
+
+print("#"*50 + "shuffled the data")
+# shuffle the data
+random.shuffle(full_data)
+print(full_data[:10])
+
+# 5:30
