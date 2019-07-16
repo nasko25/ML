@@ -79,18 +79,18 @@ def k_nearest_neighbors(data, predict, k = 3):
 print(len(dataset))
 result = k_nearest_neighbors(dataset, new_features, k = 3)
 print(result)
-visualize_points(result)
+# visualize_points(result)
 
 
 # load data from a file
-df = pd.read_csv("datasets/dataset.data")
+df = pd.read_csv("C:\\Users\Atanas Pashov\OneDrive\Programming\Machine Learning Tutorials\datasets\dataset.data")
 df.replace("?", -99999, inplace=True)
 df.drop(['id'], 1, inplace=True)
 print(df.head())
 full_data = df.astype(float).values.tolist()
 print(full_data[:10])
 
-print("#"*50 + "shuffled the data")
+print("#"*50 + " shuffled the data " + "#"*50)
 # shuffle the data
 random.shuffle(full_data)
 print(full_data[:10])
