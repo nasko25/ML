@@ -71,8 +71,9 @@ def k_nearest_neighbors(data, predict, k = 3):
 			
 	votes = [i[1] for i in sorted(distances)[:k]]
 	vote_result = Counter(votes).most_common(1)[0][0]
+	confidence = Counter(votes).most_common(1)[0][1] / k
 	
-	return vote_result
+	return vote_result, confidence
 
 print(len(dataset))
 result = k_nearest_neighbors(dataset, new_features, k = 3)
@@ -81,7 +82,7 @@ print(result)
 
 
 # load data from a file
-df = pd.read_csv("C:\\Users\Atanas Pashov\OneDrive\Programming\Machine Learning Tutorials\datasets\dataset.data")
+df = pd.read_csv("C:\\Users\\atana\OneDrive\Programming\Machine Learning Tutorials\datasets\dataset.data")
 df.replace("?", -99999, inplace=True)
 df.drop(['id'], 1, inplace=True)
 print(df.head())
@@ -115,10 +116,12 @@ total = 0
 
 for group in test_set:
 	for data in test_set[group]:
-		vote = k_nearest_neighbors(train_set, data, k=5)
+		vote,confidence = k_nearest_neighbors(train_set, data, k=5)
 		# print(data)
 		if group == vote:
 			correct += 1
+		else: 
+			print(confidence)
 		total += 1
 		
 print("Accuracy: ", correct/total)
