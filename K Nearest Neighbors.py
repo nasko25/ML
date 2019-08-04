@@ -83,6 +83,7 @@ print(result)
 
 # load data from a file
 df = pd.read_csv("C:\\Users\\atana\OneDrive\Programming\Machine Learning Tutorials\datasets\dataset.data")
+# df = pd.read_csv("C:\\Users\Atanas Pashov\OneDrive\Programming\Machine Learning Tutorials\datasets\dataset.data")
 df.replace("?", -99999, inplace=True)
 df.drop(['id'], 1, inplace=True)
 print(df.head())
