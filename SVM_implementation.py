@@ -13,7 +13,50 @@ class support_vector_machine:
             
     # train        
     def fit(self, data):
-        pass
+        self.data = data
+        # {||w|| : [w, b]} dictionary { key(magnitute of w) : value(list of w and b) }
+        opt_dict = {}
+        
+        # apply the transforms to the vector w
+        transforms = [[1,1],
+                      [-1,1],
+                      [-1,-1],
+                      [1,1]]
+                                          
+        all_data = []
+        for yi in self.data:
+            for feature_set in self.data[yi]:
+                for feature in feature_set:
+                    all_data.append(feature)
+        
+        self.max_feature_value = max(all_data)
+        self.min_feature_value = min(all_data)
+        all_data = None
+        
+        step_sizes = [self.max_feature_value * 0.1,     # big steps
+                      self.max_feature_value * 0.01,    # smaller steps
+                      # point of expense:
+                      self.max_feature_value * 0.001]     
+        
+        # extremely expensive
+        b_range_multiple = 5    # does not have to be as presise as w
+        
+        #
+        b_multiple = 5
+       
+        #saves a lot of processing; but less accurate
+        latest_optimum = self.max_feature_value * 10
+        
+        for step in step_sizes:
+            w = np.array([latest_optimum, latest_optimum])
+            
+            # we can do this because convex (we will know when it is optimized)
+            optimized = False
+            
+            while not optimized:
+                pass
+            
+        
        
     def predict(self, features):
         # sign( x.w+b )
