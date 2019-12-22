@@ -14,7 +14,7 @@ class support_vector_machine:
     # train        
     def fit(self, data):
         self.data = data
-        # {||w|| : [w, b]} dictionary { key(magnitute of w) : value(list of w and b) }
+        # {||w|| : [w, b]} dictionary { key(magnitude of w) : value(list of w and b) }
         opt_dict = {}
         
         # apply the transforms to the vector w
@@ -33,15 +33,20 @@ class support_vector_machine:
         self.min_feature_value = min(all_data)
         all_data = None
         
+		# support vectors yi(xi.w+b) = 1
+		# choose a constant that is very near 1 to stop optimizing
+		
+		
         step_sizes = [self.max_feature_value * 0.1,     # big steps
                       self.max_feature_value * 0.01,    # smaller steps
                       # point of expense:
-                      self.max_feature_value * 0.001]     
+                      self.max_feature_value * 0.001]     # to make more precise, just add smaller step sizes
         
         # extremely expensive
         b_range_multiple = 5    # does not have to be as presise as w
         
-        #
+        # we don't need to take as small of steps 
+		# with b as we do w
         b_multiple = 5
        
         #saves a lot of processing; but less accurate
@@ -54,9 +59,48 @@ class support_vector_machine:
             optimized = False
             
             while not optimized:
-                pass
-            
-        
+                for b in np.arange(-1*(self.max_feature_value*b_range_multiple), 
+									self.max_feature_value*b_range_multiple,
+									step*b_multiple):		# like python range(); np.arange(first value in the range, last value, step size)
+					for transformation in transforms:
+						w_t = w*transformation
+						found_option = True
+						# This is the weakest link in the SVM funndamentally;
+						# SMO attempts to fix this a bit
+						# (run this calculation on all of the data to make sure it fits)
+						# Constraint function: yi*(xi.w+b) >= 1
+						for i in self.data:
+							for xi in self.data[i]:
+								yi = i
+								if not yi*(np.dot(w_t, xi) + b) >= 1:
+									found_option = False
+									# TODO should break here; as constraint function fails (so this yi does not work)
+						if found_option:
+							opt_dict[np.linalg.norm(w_t)] = [w_t, b]		# np.linalg.norm(w_t) - get the magnitude of the w_t vector
+			
+				# the two ws are identical, so choose one to compare
+				if w[0] < 0:
+					# not the best value, but works
+					optimized = True
+					print("Optimized a step.")
+				else: 
+					# w = [5, 5]
+					# step = 1
+					# w - step = [4, 4]
+					w = w - step
+					
+			norms = sorted([n for n in opt_dict])	# sort from lowest to highest
+			
+			# the w dictionary looks like this:
+			# ||w|| : [w, b]
+			# magnitude of w : [w,b]
+			# key : value
+			opt_choice = opt_dict[norms[0]]			# smallest norm 
+			
+			self.w = opt_choice[0]
+			self.b = opt_choice[1]
+			latest_optimum = opt_choice[0][0] + step*2
+		
        
     def predict(self, features):
         # sign( x.w+b )
