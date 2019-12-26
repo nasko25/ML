@@ -43,7 +43,8 @@ class support_vector_machine:
                       self.max_feature_value * 0.001]     # to make more precise, just add smaller step sizes
         
         # extremely expensive
-        b_range_multiple = 5    # does not have to be as presise as w
+		# higher number for b_range_multiple will be more precise 
+        b_range_multiple = 2 #5    # does not have to be as presise as w
         
         # we don't need to take as small of steps 
         # with b as we do w
@@ -76,6 +77,7 @@ class support_vector_machine:
                                 if not yi*(np.dot(w_t, xi) + b) >= 1:
                                     found_option = False
                                     # TODO should break here; as constraint function fails (so this yi does not work)
+                                    #print(xi,":",yi*(np.dot(w_t, xi) + b))
                         if found_option:
                             opt_dict[np.linalg.norm(w_t)] = [w_t, b]        # np.linalg.norm(w_t) - get the magnitude of the w_t vector
             
@@ -101,6 +103,11 @@ class support_vector_machine:
             self.w = opt_choice[0]
             self.b = opt_choice[1]
             latest_optimum = opt_choice[0][0] + step*2
+            
+        '''for i in self.data:
+            for xi in self.data[i]:
+                yi = i
+                print(xi,":",yi*(np.dot(self.w, xi) + self.b))'''
         
        
     def predict(self, features):
@@ -131,19 +138,19 @@ class support_vector_machine:
         # positive support vector hyperplane
         psv1 = hyperplane(hyp_x_min, self.w, self.b, 1)        # psv1 - just a scalar value (y)
         psv2 = hyperplane(hyp_x_max, self.w, self.b, 1)
-        self.ax.plot([hyp_x_min, hyp_x_max], [psv1, psv2])
+        self.ax.plot([hyp_x_min, hyp_x_max], [psv1, psv2], color = "k")        # black
         
         # (w.x+b) = -1
         # negative support vector hyperplane
         nsv1 = hyperplane(hyp_x_min, self.w, self.b, -1)        # psv1 - just a scalar value (y)
         nsv2 = hyperplane(hyp_x_max, self.w, self.b, -1)
-        self.ax.plot([hyp_x_min, hyp_x_max], [nsv1, nsv2])
+        self.ax.plot([hyp_x_min, hyp_x_max], [nsv1, nsv2], "k")                # black
         
         # (w.x+b) = 0
         # decision boundary
         db1 = hyperplane(hyp_x_min, self.w, self.b, 0)        # psv1 - just a scalar value (y)
         db2 = hyperplane(hyp_x_max, self.w, self.b, 0)
-        self.ax.plot([hyp_x_min, hyp_x_max], [db1, db2])
+        self.ax.plot([hyp_x_min, hyp_x_max], [db1, db2], "y--")        # yellow dashes
 
         plt.show()
 
@@ -157,4 +164,17 @@ data_dictionary = {-1:np.array([[1, 7],
                                 
 svm = support_vector_machine()
 svm.fit(data = data_dictionary)
+
+predict_us = [[0,10],
+              [1,3],
+              [3,4],
+              [3,5],
+              [5,5],
+              [5,6],
+              [6,-5],
+              [5,8]]
+# really fast predictions once we have w and b
+for p in predict_us:
+    svm.predict(p)
+
 svm.visualize()
