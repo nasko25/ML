@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+# The script calculates an integral with 5 variables of the form
+# f(x) = integral(f1(x1) + integral(f2(x2) + integral(f3(x3) + integral(f4(x4) + integral(f5(x5) dx5) dx4) dx3) dx2) dx1)
+# for the set of numbers between 0 and 1
+# using the Monte Carlo algorithm. There is a condition for x4 and x5 - x_4^2 + x_5^2 <= 1
+
 import random
 import math
 
