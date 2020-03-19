@@ -8,3 +8,6 @@ I have coded the following files:
     - calculates an integral with 5 variables using the monte carlo algorithm
 - minimize_function.py
     - it minimizes a function using scipy.optimize
+	
+	
+Also, this is a good cvxopt MIT tutorial: https://courses.csail.mit.edu/6.867/wiki/images/a/a7/Qp-cvxopt.pdf 
