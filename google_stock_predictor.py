@@ -6,6 +6,7 @@ import numpy as np
 # Got the data from yahoo
 data = pd.read_csv('datasets/GOOG.csv')
 
+actual_data = data[-2:].get('Close').tolist()
 
 data.drop(data.tail(2).index, inplace=True)  # drop the last 2 entries to guess them later
 data.Date = pd.to_datetime(data.Date)        # convert date to datetime object
@@ -29,5 +30,5 @@ model_fit.summary()
 
 print("-------------- NO VOLUME ---------------------")
 print("predicted values: {}".format(model_fit.forecast(steps=2,exog=np.array([[1061.32, 1071.32, 1013.54], [1103.77, 1135.00, 1090.62]]))[0]))
-print("actual vaules: [{} {}]".format(data[-2:-1].get('Close').to_string(index=False).split(' ')[1], data[-1:].get('Close').to_string(index=False).split(' ')[1]))
+print("actual vaules: {}".format(actual_data))
 
