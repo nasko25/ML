@@ -28,4 +28,6 @@ model_fit.summary()
 #print(model_fit.forecast(steps=2,exog=np.array([1061.32, 1071.32, 1013.54, 4044100]))[0])
 
 print("-------------- NO VOLUME ---------------------")
-print(model_fit.forecast(steps=2,exog=np.array([[1061.32, 1071.32, 1013.54], [1103.77, 1135.00, 1090.62]]))[0])
+print("predicted values: {}".format(model_fit.forecast(steps=2,exog=np.array([[1061.32, 1071.32, 1013.54], [1103.77, 1135.00, 1090.62]]))[0]))
+print("actual vaules: [{} {}]".format(data[-2:-1].get('Close').to_string(index=False).split(' ')[1], data[-1:].get('Close').to_string(index=False).split(' ')[1]))
+
