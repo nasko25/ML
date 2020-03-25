@@ -11,6 +11,7 @@ I have coded the following files:
 - google_stock_predictor.py
     - it forcasts two 'future' days of the google stock prices
     - the script uses the Open, High, Low stock values from 2015 to 2020 to predict the Close stock values of Google
-	
+    - heavily inspired by https://towardsdatascience.com/tesla-stock-price-prediction-f16a702f67d7
+    
 Also, this is a good cvxopt MIT tutorial: https://courses.csail.mit.edu/6.867/wiki/images/a/a7/Qp-cvxopt.pdf 
 
