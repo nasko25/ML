@@ -18,6 +18,8 @@ data.drop('Date', 1, inplace=True)	     # Remove the Date column as it was set a
 model = ARIMA(data.Close, order=(1,0,3), exog = data.drop(['Volume', 'Close', 'Adj Close'], axis=1))
 #model = ARIMA(data.Close, order=(1,0,3), exog = data.drop(['Close', 'Adj Close'], axis=1))
 
+print(data.isnull().any())
+
 model_fit = model.fit()
 model_fit.summary()
 
