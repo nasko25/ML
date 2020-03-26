@@ -12,6 +12,9 @@ I have coded the following files:
     - it forcasts two 'future' days of the google stock prices
     - the script uses the Open, High, Low stock values from 2015 to 2020 to predict the Close stock values of Google
     - heavily inspired by https://towardsdatascience.com/tesla-stock-price-prediction-f16a702f67d7
+    - it uses arima
+- google_stock_predictor_random_forest.py
+    - it is just like the previous stock predictor, but using a random forest regressor
     
 Also, this is a good cvxopt MIT tutorial: https://courses.csail.mit.edu/6.867/wiki/images/a/a7/Qp-cvxopt.pdf 
 
